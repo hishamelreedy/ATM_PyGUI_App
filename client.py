@@ -47,3 +47,5 @@ class client:
     def reduceme(self,amount):
         self.cbalance=int(self.cbalance-int(amount))
         updateclientsdb(self.cid,self.cbalance)
+
+#End of ClientDB Manager

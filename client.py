@@ -19,18 +19,27 @@ def importclientsdb(id):
         print('balanceofid=',balanceofid)
         global client1
         client1 = client(id,nameofid,passofid,balanceofid)
-def updateclientsdb(id,balanceupdate):
+def updateclientsdb(client1,newpass,newbalance):
     import csv
+    reader=open("clientsdb.csv", "r")
+    lines=list(reader)
+    iterator=0
     with open('clientsdb.csv',newline='')as csvfile:
         reader=csv.DictReader(csvfile)
-        lines=list(reader)
-        for column in lines:
-            if column['ID']==id and column['Type']=='Balance':
-                column['Data']=balanceupdate
-                print('Balance updated:',column['Data'])
-                #print(lines[column]['Data'])
-        #writer=csv.writer(open(csvfile))
-        #writer.writerows(reader)        
+        for column in reader:
+            if column['ID']==client1.cid and column['Type']=='Balance':
+                break
+            iterator=iterator+1    
+    newpass=str(client1.cid)+',Password,'+str(newpass)+'\n'
+    newbalance=str(client1.cid)+',Balance,'+str(newbalance)+'\n'
+    print('oldpass=',lines[iterator])
+    lines[iterator]=newpass
+    lines[iterator+1]=newbalance
+    #print('newpass=',lines[iterator])
+    writer= open("clientsdb.csv","w") 
+    writer.writelines(lines) 
+    writer.close()
+
 class client:
     def __init__(self,id,name,passw,balance):
         self.cid=id
@@ -45,7 +54,8 @@ class client:
     def getbalance(self):
         return self.cbalance
     def reduceme(self,amount):
-        self.cbalance=int(self.cbalance-int(amount))
-        updateclientsdb(self.cid,self.cbalance)
-
+        newbalance=int(self.cbalance-int(amount))
+        updateclientsdb(self,self.cpassw,newbalance)
+    def changepass(self,newpass):
+        updateclientsdb(self,newpass,self.cbalance)
 #End of ClientDB Manager

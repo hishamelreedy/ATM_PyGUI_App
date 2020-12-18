@@ -1,12 +1,15 @@
 #Fawry Service PAGE
 
 import sys
+import client
+import withdraw_support
+import withdraw
 import tkinter as tk
 import tkinter.ttk as ttk
 py3 = True
     
 import fawryservice_support
-    
+from tkinter import END    
 def vp_start_gui():
         '''Starting point when module is the main routine.'''
         global val, w, root
@@ -163,7 +166,7 @@ class Toplevel1:
             self.Button3.configure(highlightcolor="black")
             self.Button3.configure(pady="0")
             self.Button3.configure(text='''Send''')
-   
+            self.Button1.configure(command=lambda: withdraw.runwithdraw(amount=self.Text2.get('1.0',END)))    
 if __name__ == '__main__':
        vp_start_gui()
    

@@ -12,6 +12,8 @@ import fawryservice_support
 import fawryservice
 import withdraw_support
 import withdraw
+import changepass_support
+import changepass
 import client
 try:
     import Tkinter as tk
@@ -58,7 +60,7 @@ def runbalanceinquiry():
 def runfawryservice():
     fawryservice.vp_start_gui()
 def runchangepassword():
-    print('You are trying to change the password use msgboxes')
+    changepass.vp_start_gui()
 def runexit():
     print('Exiting Program...........')
 class Toplevel1:

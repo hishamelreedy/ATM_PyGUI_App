@@ -6,7 +6,7 @@
 #    Dec 18, 2020 09:24:28 AM CAT  platform: Windows NT
 
 import sys
-
+import client
 try:
     import Tkinter as tk
 except ImportError:
@@ -20,7 +20,7 @@ except ImportError:
     py3 = True
 
 import changepass_support
-
+from tkinter import END
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -45,7 +45,14 @@ def destroy_Toplevel1():
     global w
     w.destroy()
     w = None
-
+def changepass1(txt1,txt2):
+    if len(txt1)-1==4 and txt1==txt2:
+        print('We have changed your password with this pass: ',txt1[0:len(txt1)-1])
+        client.client1.changepass(txt1[0:len(txt1)-1])
+    elif txt1==txt2:
+        print('Error Password must be of length 4')
+    else:
+        print('Error you didn\'t repeat the same password correctly')    
 class Toplevel1:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -101,18 +108,6 @@ class Toplevel1:
         self.Label3.configure(highlightcolor="black")
         self.Label3.configure(text='''Repeat new password:''')
 
-        self.Button1 = tk.Button(top)
-        self.Button1.place(relx=0.583, rely=0.622, height=44, width=107)
-        self.Button1.configure(activebackground="#ececec")
-        self.Button1.configure(activeforeground="#000000")
-        self.Button1.configure(background="#d9d9d9")
-        self.Button1.configure(disabledforeground="#a3a3a3")
-        self.Button1.configure(font="-family {Segoe UI} -size 16 -weight bold")
-        self.Button1.configure(foreground="#000000")
-        self.Button1.configure(highlightbackground="#d9d9d9")
-        self.Button1.configure(highlightcolor="black")
-        self.Button1.configure(pady="0")
-        self.Button1.configure(text='''Enter''')
 
         self.Text1 = tk.Text(top)
         self.Text1.place(relx=0.472, rely=0.356, relheight=0.053, relwidth=0.373)
@@ -140,6 +135,19 @@ class Toplevel1:
         self.Text2.configure(selectforeground="white")
         self.Text2.configure(wrap="word")
 
+        self.Button1 = tk.Button(top)
+        self.Button1.place(relx=0.583, rely=0.622, height=44, width=107)
+        self.Button1.configure(activebackground="#ececec")
+        self.Button1.configure(activeforeground="#000000")
+        self.Button1.configure(background="#d9d9d9")
+        self.Button1.configure(disabledforeground="#a3a3a3")
+        self.Button1.configure(font="-family {Segoe UI} -size 16 -weight bold")
+        self.Button1.configure(foreground="#000000")
+        self.Button1.configure(highlightbackground="#d9d9d9")
+        self.Button1.configure(highlightcolor="black")
+        self.Button1.configure(pady="0")
+        self.Button1.configure(text='''Enter''')
+        self.Button1.configure(command=lambda: changepass1(txt1=self.Text1.get('1.0',END),txt2=self.Text2.get('1.0',END)))
 if __name__ == '__main__':
     vp_start_gui()
 
